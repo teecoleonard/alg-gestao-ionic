@@ -1,0 +1,12 @@
+platform: ionic-angular
+type: ionic
+framework: angular
+node_version: 18
+build_command: ionic build --configuration=production
+output_directory: www
+cache_directories:
+  - node_modules
+  - www
+environment_variables:
+  - NODE_ENV=production
+  - IONIC_ENV=prod 

@@ -5,8 +5,8 @@
   },
   "type": "angular-standalone",
   "id": "alg-gestao-ionic",
-  "root": "",
-  "sourceRoot": "src",
-  "projectType": "application",
-  "defaultProject": "app"
-}
+  "hooks": {
+    "build:before": "echo 'Starting Ionic Angular build'",
+    "build:after": "echo 'Ionic Angular build completed'"
+  }
+} 
