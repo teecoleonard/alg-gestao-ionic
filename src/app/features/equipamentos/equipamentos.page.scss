@@ -1,0 +1,364 @@
+// Equipamentos page styles
+// Using global styles from global.scss for coming-soon pages 
+
+// Importando a fonte Inter do Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.equipamentos-content {
+  // Fundo verde escuro igual ao dashboard
+  --background: linear-gradient(135deg, #1a4d3a 0%, #0f2419 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  
+  // Adiciona padding-top para evitar conflito com header
+  --padding-top: 20px;
+
+  .equipamentos-container {
+    padding: 16px;
+    min-height: 100vh;
+  }
+
+  // ========================================
+  // BARRA DE BUSCA
+  // ========================================
+  .search-section {
+    margin-bottom: 24px;
+    
+    .search-container {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(26, 77, 58, 0.1);
+      
+      ion-searchbar {
+        --background: rgba(26, 77, 58, 0.05);
+        --border-radius: 12px;
+        --box-shadow: none;
+        --color: #1a4d3a;
+        --placeholder-color: #4a6741;
+        --icon-color: #2d7738;
+        --clear-button-color: #2d7738;
+        font-family: 'Inter', sans-serif;
+        
+        &.searchbar-has-focus {
+          --background: rgba(26, 77, 58, 0.1);
+        }
+      }
+    }
+  }
+
+  // ========================================
+  // CARDS DE EQUIPAMENTOS
+  // ========================================
+  .equipamento-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+      border-color: rgba(26, 77, 58, 0.2);
+    }
+    
+    .equipamento-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 20px 0 20px;
+      
+      .equipamento-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2d7738 0%, #1a4d3a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1.2rem;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .equipamento-info {
+        flex: 1;
+        margin-left: 16px;
+        
+        h3 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #1a4d3a;
+          margin: 0 0 4px 0;
+          font-family: 'Inter', sans-serif;
+        }
+        
+        .equipamento-codigo {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          background: rgba(45, 119, 56, 0.1);
+          color: #2d7738;
+          border: 1px solid rgba(45, 119, 56, 0.2);
+          font-family: 'Inter', sans-serif;
+          
+          ion-icon {
+            font-size: 0.875rem;
+          }
+        }
+      }
+      
+      .menu-button {
+        --background: rgba(26, 77, 58, 0.1);
+        --color: #2d7738;
+        --border-radius: 8px;
+        --padding-start: 8px;
+        --padding-end: 8px;
+        
+        &:hover {
+          --background: rgba(26, 77, 58, 0.2);
+        }
+      }
+    }
+    
+    .equipamento-details {
+      padding: 12px 20px 20px 20px;
+      
+      .detail-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-family: 'Inter', sans-serif;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        ion-icon {
+          color: #2d7738;
+          font-size: 1rem;
+          width: 20px;
+        }
+        
+        span {
+          color: #4a6741;
+          font-size: 0.9rem;
+          font-weight: 400;
+        }
+      }
+      
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        
+        &.disponivel {
+          background: rgba(45, 119, 56, 0.1);
+          color: #2d7738;
+          border: 1px solid rgba(45, 119, 56, 0.2);
+        }
+        
+        &.alugado {
+          background: rgba(255, 193, 7, 0.1);
+          color: #ffc107;
+          border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+        
+        &.manutencao {
+          background: rgba(220, 53, 69, 0.1);
+          color: #dc3545;
+          border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+        
+        ion-icon {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+
+  // ========================================
+  // ESTADO VAZIO
+  // ========================================
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    
+    .empty-icon {
+      font-size: 4rem;
+      color: rgba(26, 77, 58, 0.3);
+      margin-bottom: 24px;
+    }
+    
+    h3 {
+      color: #e8f5e8;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    p {
+      color: rgba(232, 245, 232, 0.8);
+      font-size: 1rem;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .add-button {
+      --background: rgba(255, 255, 255, 0.95);
+      --color: #1a4d3a;
+      --border-color: rgba(26, 77, 58, 0.2);
+      --border-radius: 12px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      
+      &:hover {
+        --background: rgba(255, 255, 255, 1);
+        --border-color: rgba(26, 77, 58, 0.4);
+      }
+      
+      ion-icon {
+        color: #2d7738;
+      }
+    }
+  }
+
+  // ========================================
+  // FAB (Floating Action Button)
+  // ========================================
+  .add-fab {
+    --background: linear-gradient(135deg, #2d7738 0%, #1a4d3a 100%);
+    --color: white;
+    --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      --box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+// ========================================
+// HEADER CUSTOMIZADO (IGUAL AO DASHBOARD)
+// ========================================
+ion-header {
+  ion-toolbar {
+    --background: linear-gradient(135deg, #1a4d3a 0%, #0f2419 100%);
+    --color: #e8f5e8;
+    --min-height: 56px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    
+    ion-title {
+      .header-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        
+        ion-icon {
+          color: #5cb368;
+          font-size: 1.1rem;
+        }
+      }
+    }
+    
+    ion-button {
+      --color: #e8f5e8;
+      --background: rgba(255, 255, 255, 0.1);
+      --border-radius: 8px;
+      
+      ion-icon {
+        font-size: 1.1rem;
+      }
+      
+      &:hover {
+        --background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}
+
+// ========================================
+// LOADING OVERLAY
+// ========================================
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 77, 58, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  
+  ion-spinner {
+    --color: #e8f5e8;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    color: #e8f5e8;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+// ========================================
+// RESPONSIVIDADE
+// ========================================
+@media (max-width: 768px) {
+  .equipamentos-content {
+    .equipamento-card {
+      .equipamento-header {
+        padding: 16px 16px 0 16px;
+        
+        .equipamento-avatar {
+          width: 45px;
+          height: 45px;
+          font-size: 1rem;
+        }
+        
+        .equipamento-info {
+          margin-left: 12px;
+          
+          h3 {
+            font-size: 1rem;
+          }
+        }
+      }
+      
+      .equipamento-details {
+        padding: 12px 16px 16px 16px;
+        
+        .detail-row {
+          font-size: 0.85rem;
+        }
+      }
+    }
+    
+    .search-section .search-container {
+      padding: 12px;
+    }
+  }
+} 

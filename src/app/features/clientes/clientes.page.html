@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="header-content">
+        <ion-icon name="people"></ion-icon>
+        <span>Clientes</span>
+      </div>
+    </ion-title>
+    <ion-button
+      fill="clear"
+      slot="end"
+      [routerLink]="['/dashboard']">
+      <ion-icon name="home"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="clientes-content">
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando clientes...</p>
+  </div>
+
+  <div class="clientes-container">
+    <!-- Search section -->
+    <div class="search-section">
+      <div class="search-container">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar clientes..."
+          debounce="300"
+          (ionInput)="filterClientes()">
+        </ion-searchbar>
+      </div>
+    </div>
+
+    <!-- Clientes list -->
+    <div *ngIf="filteredClientes.length > 0">
+      <ion-card class="cliente-card" *ngFor="let cliente of filteredClientes">
+        <div class="cliente-header">
+          <div class="cliente-avatar">
+            {{ cliente.nome.substring(0, 1).toUpperCase() }}
+          </div>
+          
+          <div class="cliente-info">
+            <h3>{{ cliente.nome }}</h3>
+            <div 
+              class="cliente-tipo"
+              [ngClass]="cliente.tipo === 'PF' ? 'pessoa-fisica' : 'pessoa-juridica'">
+              <ion-icon [name]="cliente.tipo === 'PF' ? 'person' : 'business'"></ion-icon>
+              <span>{{ cliente.tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica' }}</span>
+            </div>
+          </div>
+          
+          <ion-button
+            fill="clear"
+            class="menu-button"
+            id="cliente-{{ cliente.id }}-menu">
+                            <ion-icon name="ellipsis-vertical"></ion-icon>
+          </ion-button>
+          
+          <!-- Menu contextual -->
+          <ion-popover trigger="cliente-{{ cliente.id }}-menu" triggerAction="click">
+            <ng-template>
+              <ion-content>
+                <ion-list>
+                  <ion-item button (click)="editCliente(cliente)">
+                    <ion-icon name="create" slot="start"></ion-icon>
+                    <ion-label>Editar</ion-label>
+                  </ion-item>
+                  <ion-item button (click)="deleteCliente(cliente.id)">
+                    <ion-icon name="trash" slot="start" color="danger"></ion-icon>
+                    <ion-label color="danger">Excluir</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </div>
+        
+        <div class="cliente-details">
+          <div class="detail-row" *ngIf="cliente.email">
+            <ion-icon name="card"></ion-icon>
+            <span>{{ cliente.email }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="cliente.telefone">
+            <ion-icon name="call"></ion-icon>
+            <span>{{ cliente.telefone }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="cliente.endereco">
+            <ion-icon name="location"></ion-icon>
+            <span>{{ cliente.endereco }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="cliente.documento">
+            <ion-icon name="card"></ion-icon>
+            <span>{{ cliente.tipo === 'PF' ? 'CPF' : 'CNPJ' }}: {{ cliente.documento }}</span>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="filteredClientes.length === 0 && !isLoading">
+      <ion-icon name="people" class="empty-icon"></ion-icon>
+      <h3>Nenhum cliente encontrado</h3>
+      <p *ngIf="searchTerm">Tente alterar os termos da busca</p>
+      <p *ngIf="!searchTerm">Você ainda não possui clientes cadastrados</p>
+      <ion-button 
+        class="add-button"
+        fill="outline" 
+        (click)="addCliente()"
+        *ngIf="!searchTerm">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Adicionar Cliente
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="add-fab" (click)="addCliente()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content> 

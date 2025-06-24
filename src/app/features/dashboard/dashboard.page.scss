@@ -1,0 +1,546 @@
+// Importando uma fonte moderna do Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.dashboard-content {
+  // Mudando para fundo verde escuro
+  --background: linear-gradient(135deg, #1a4d3a 0%, #0f2419 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  
+  // Adiciona padding-top para evitar conflito com header
+  --padding-top: 20px;
+  
+  .dashboard-container {
+    padding: 16px;
+    min-height: 100vh;
+  }
+
+  // ========================================
+  // HEADER COM BOAS-VINDAS
+  // ========================================
+  .welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 20px;
+    // Fundo verde escuro translúcido
+    background: rgba(26, 77, 58, 0.3);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    .welcome-content {
+      h1 {
+        color: #e8f5e8;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        font-family: 'Inter', sans-serif;
+      }
+      
+      p {
+        color: rgba(232, 245, 232, 0.9);
+        font-size: 1rem;
+        margin: 0;
+        font-weight: 400;
+      }
+    }
+    
+    .logout-button {
+      --color: #e8f5e8;
+      --background: rgba(26, 77, 58, 0.4);
+      --border-radius: 12px;
+      
+      ion-icon {
+        font-size: 1.4rem;
+      }
+      
+      &:hover {
+        --background: rgba(26, 77, 58, 0.6);
+      }
+    }
+  }
+
+  // ========================================
+  // CARDS DE ESTATÍSTICAS
+  // ========================================
+  .stats-grid {
+    margin-bottom: 24px;
+    
+    .stat-card {
+      // Fundo branco com leve transparência para contraste
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(26, 77, 58, 0.1);
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        border-color: rgba(26, 77, 58, 0.2);
+      }
+      
+      ion-card-content {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .stat-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          ion-icon {
+            font-size: 1.5rem;
+            color: white;
+          }
+        }
+        
+        .stat-info {
+          flex: 1;
+          margin-left: 16px;
+          
+          h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            color: #1a4d3a;
+            font-family: 'Inter', sans-serif;
+          }
+          
+          p {
+            font-size: 0.9rem;
+            color: #4a6741;
+            margin: 0;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+          }
+        }
+        
+        .stat-arrow, .trend-up {
+          opacity: 0.7;
+          
+          ion-icon {
+            font-size: 1.2rem;
+            color: #4a6741;
+          }
+        }
+        
+        .trend-up ion-icon {
+          color: #2d7738;
+        }
+      }
+      
+      // Cores específicas dos cards com tons verdes
+      &.clientes-card .stat-icon {
+        background: linear-gradient(135deg, #2d7738 0%, #1a4d3a 100%);
+      }
+      
+      &.contratos-card .stat-icon {
+        background: linear-gradient(135deg, #3a8b47 0%, #2d7738 100%);
+      }
+      
+      &.equipamentos-card .stat-icon {
+        background: linear-gradient(135deg, #4a9f56 0%, #3a8b47 100%);
+      }
+      
+      &.devolucoes-card .stat-icon {
+        background: linear-gradient(135deg, #5cb368 0%, #4a9f56 100%);
+      }
+    }
+  }
+
+  // ========================================
+  // STATUS DOS CONTRATOS
+  // ========================================
+  .status-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    margin-bottom: 24px;
+    
+    ion-card-header {
+      padding-bottom: 8px;
+      
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #1a4d3a;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        
+        ion-icon {
+          color: #2d7738;
+        }
+      }
+    }
+    
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      
+      .status-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 12px;
+        
+        .status-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          ion-icon {
+            font-size: 1.2rem;
+            color: white;
+          }
+        }
+        
+        .status-info {
+          h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 2px 0;
+            color: #1a4d3a;
+            font-family: 'Inter', sans-serif;
+          }
+          
+          p {
+            font-size: 0.85rem;
+            color: #4a6741;
+            margin: 0;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+          }
+        }
+        
+        &.success {
+          background: rgba(45, 119, 56, 0.1);
+          border: 1px solid rgba(45, 119, 56, 0.2);
+          
+          .status-icon {
+            background: #2d7738;
+          }
+        }
+        
+        &.warning {
+          background: rgba(255, 193, 7, 0.1);
+          border: 1px solid rgba(255, 193, 7, 0.2);
+          
+          .status-icon {
+            background: #ffc107;
+          }
+        }
+        
+        &.danger {
+          background: rgba(220, 53, 69, 0.1);
+          border: 1px solid rgba(220, 53, 69, 0.2);
+          
+          .status-icon {
+            background: #dc3545;
+          }
+        }
+      }
+    }
+  }
+
+  // ========================================
+  // CONTRATOS RECENTES
+  // ========================================
+  .recent-contracts-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    margin-bottom: 24px;
+    
+    ion-card-header {
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #1a4d3a;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        
+        ion-icon {
+          color: #2d7738;
+        }
+      }
+    }
+    
+    // Força o ion-list e ion-card-content a ter fundo transparente
+    ion-list {
+      background: transparent !important;
+      --background: transparent !important;
+    }
+    
+    ion-card-content {
+      background: transparent !important;
+      --background: transparent !important;
+    }
+    
+    .contract-item {
+      --background: transparent;
+      --border-color: rgba(26, 77, 58, 0.1);
+      --padding-start: 0;
+      --padding-end: 0;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      
+      &:hover {
+        --background: rgba(26, 77, 58, 0.05);
+      }
+      
+      .contract-avatar {
+        width: 40px;
+        height: 40px;
+        
+        .avatar-content {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #2d7738 0%, #1a4d3a 100%);
+          color: white;
+          font-weight: 600;
+          font-size: 0.9rem;
+          font-family: 'Inter', sans-serif;
+        }
+      }
+      
+      ion-label {
+        h3 {
+          color: #1a4d3a;
+          font-weight: 600;
+          font-family: 'Inter', sans-serif;
+        }
+        
+        p {
+          color: #4a6741;
+          font-size: 0.85rem;
+          font-family: 'Inter', sans-serif;
+        }
+      }
+      
+      .contract-status {
+        .status-chip {
+          --background: rgba(26, 77, 58, 0.1);
+          --color: #1a4d3a;
+          font-family: 'Inter', sans-serif;
+        }
+      }
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      
+      .empty-icon {
+        font-size: 3rem;
+        color: rgba(26, 77, 58, 0.3);
+        margin-bottom: 16px;
+      }
+      
+      h3 {
+        color: #1a4d3a;
+        margin-bottom: 8px;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      p {
+        color: #4a6741;
+        font-family: 'Inter', sans-serif;
+      }
+    }
+  }
+
+  // ========================================
+  // AÇÕES RÁPIDAS
+  // ========================================
+  .quick-actions {
+    margin-bottom: 24px;
+    
+    h2 {
+      color: #e8f5e8;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      
+      .action-button {
+        --background: rgba(255, 255, 255, 0.95);
+        --color: #1a4d3a;
+        --border-color: rgba(26, 77, 58, 0.2);
+        --border-radius: 12px;
+        height: 48px;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        
+        &:hover {
+          --background: rgba(255, 255, 255, 1);
+          --border-color: rgba(26, 77, 58, 0.4);
+        }
+        
+        ion-icon {
+          color: #2d7738;
+        }
+      }
+    }
+  }
+
+  // ========================================
+  // LOADING OVERLAY
+  // ========================================
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(26, 77, 58, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    
+    ion-spinner {
+      --color: #e8f5e8;
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: #e8f5e8;
+      font-size: 1rem;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+    }
+  }
+}
+
+// ========================================
+// HEADER CUSTOMIZADO
+// ========================================
+ion-header {
+  ion-toolbar {
+    --background: linear-gradient(135deg, #1a4d3a 0%, #0f2419 100%);
+    --color: #e8f5e8;
+    --min-height: 56px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    
+    ion-title {
+      .header-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        
+        ion-icon {
+          color: #5cb368;
+          font-size: 1.1rem;
+        }
+      }
+    }
+    
+    ion-button {
+      --color: #e8f5e8;
+      --background: rgba(255, 255, 255, 0.1);
+      --border-radius: 8px;
+      
+      ion-icon {
+        font-size: 1.1rem;
+      }
+      
+      &:hover {
+        --background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}
+
+// ========================================
+// RESPONSIVIDADE
+// ========================================
+@media (max-width: 768px) {
+  .dashboard-content {
+    .stats-grid .stat-card ion-card-content {
+      padding: 16px;
+      
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        
+        ion-icon {
+          font-size: 1.3rem;
+        }
+      }
+      
+      .stat-info {
+        margin-left: 12px;
+        
+        h2 {
+          font-size: 1.5rem;
+        }
+        
+        p {
+          font-size: 0.8rem;
+        }
+      }
+    }
+    
+    .status-card .status-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    
+    .quick-actions .actions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .stats-grid .stat-card ion-card-content {
+    .stat-info h2 {
+      font-size: 1.3rem;
+    }
+  }
+} 

@@ -1,0 +1,238 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <div class="header-content">
+        <ion-icon name="bar-chart"></ion-icon>
+        ALG Gestão - Dashboard
+      </div>
+    </ion-title>
+    <ion-button slot="end" fill="clear" (click)="logout()">
+              <ion-icon name="log-out"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="dashboard-content">
+  <!-- Pull to Refresh -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content 
+      pullingText="Puxe para atualizar..."
+      refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="dashboard-container">
+    
+    <!-- Header com Boas-vindas -->
+    <div class="welcome-section">
+      <div class="welcome-content">
+        <h1>Olá, {{ currentUser?.nome || 'Usuário' }}!</h1>
+        <p>Bem-vindo ao painel de controle</p>
+      </div>
+      <ion-button fill="clear" (click)="logout()" class="logout-button">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Cards de Estatísticas Principais -->
+    <div class="stats-grid">
+      <ion-grid>
+        <ion-row>
+          
+          <!-- Clientes -->
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card clientes-card" (click)="navigateToClientes()">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="people"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ stats.clientes }}</h2>
+                  <p>Clientes</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Contratos -->
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card contratos-card" (click)="navigateToContratos()">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="document-text"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ stats.contratos }}</h2>
+                  <p>Contratos</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Equipamentos -->
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card equipamentos-card" (click)="navigateToEquipamentos()">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="build"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ stats.equipamentos }}</h2>
+                  <p>Materiais</p>
+                </div>
+              
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Devoluções -->
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card devolucoes-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="return-up-back"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ stats.devolucoes }}</h2>
+                  <p>Devol.</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Status dos Contratos -->
+    <ion-card class="status-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="bar-chart"></ion-icon>
+          Status dos Contratos
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="status-grid">
+          
+          <!-- Contratos Ativos -->
+          <div class="status-item success">
+            <div class="status-icon">
+                              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="status-info">
+              <h3>{{ contratoStatus.ativos }}</h3>
+              <p>Ativos</p>
+            </div>
+          </div>
+
+          <!-- Contratos Vencendo -->
+          <div class="status-item warning">
+            <div class="status-icon">
+                              <ion-icon name="warning"></ion-icon>
+            </div>
+            <div class="status-info">
+              <h3>{{ contratoStatus.vencendo }}</h3>
+              <p>Vencendo</p>
+            </div>
+          </div>
+
+          <!-- Contratos Vencidos -->
+          <div class="status-item danger">
+            <div class="status-icon">
+              <ion-icon name="close-circle"></ion-icon>
+            </div>
+            <div class="status-info">
+              <h3>{{ contratoStatus.vencidos }}</h3>
+              <p>Vencidos</p>
+            </div>
+          </div>
+
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Contratos Recentes -->
+    <ion-card class="recent-contracts-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="time"></ion-icon>
+          Contratos Recentes
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-list *ngIf="contratosRecentes.length > 0; else noContracts">
+          <ion-item 
+            *ngFor="let contrato of contratosRecentes" 
+            class="contract-item"
+            (click)="navigateToContratos()">
+            
+            <ion-avatar slot="start" class="contract-avatar">
+              <div class="avatar-content">{{ contrato.contratoNum || contrato.id }}</div>
+            </ion-avatar>
+            
+            <ion-label>
+              <h3>{{ contrato.cliente_nome || contrato.clienteNome }}</h3>
+              <p>Contrato: {{ contrato.contratoNum || '#' + contrato.id }}</p>
+              <p>Valor: {{ formatCurrency(contrato.contratoValor) }}</p>
+            </ion-label>
+            
+            <div slot="end" class="contract-status">
+              <ion-chip 
+                [color]="getStatusColor(contrato.status_assinatura || contrato.status)"
+                class="status-chip">
+                <ion-icon [name]="getStatusIcon(contrato.status_assinatura || contrato.status)"></ion-icon>
+                <ion-label>{{ contrato.status_assinatura || contrato.status || 'Ativo' }}</ion-label>
+              </ion-chip>
+            </div>
+          </ion-item>
+        </ion-list>
+
+        <ng-template #noContracts>
+          <div class="empty-state">
+            <ion-icon name="document-text" class="empty-icon"></ion-icon>
+            <h3>Nenhum contrato recente</h3>
+            <p>Os contratos aparecerão aqui quando criados</p>
+          </div>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Ações Rápidas -->
+    <div class="quick-actions">
+      <h2>Ações Rápidas</h2>
+      <div class="actions-grid">
+        <ion-button expand="block" fill="outline" (click)="navigateToEquipamentos()" class="action-button equipamentos">
+          <ion-icon name="build" slot="start"></ion-icon>
+          Equipamentos
+        </ion-button>
+        
+        <ion-button expand="block" fill="outline" (click)="navigateToClientes()" class="action-button clientes">
+          <ion-icon name="people" slot="start"></ion-icon>
+          Clientes
+        </ion-button>
+        
+        <ion-button expand="block" fill="outline" (click)="navigateToContratos()" class="action-button contratos">
+          <ion-icon name="document-text" slot="start"></ion-icon>
+          Contratos
+        </ion-button>
+        
+        <ion-button expand="block" fill="outline" (click)="navigateToEquipamentos()" class="action-button equipamentos-alt">
+          <ion-icon name="build" slot="start"></ion-icon>
+          Equipamentos
+        </ion-button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loading Overlay -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Carregando dados...</p>
+  </div>
+
+</ion-content> 
+ 

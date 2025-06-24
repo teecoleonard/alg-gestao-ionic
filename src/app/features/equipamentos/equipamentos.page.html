@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="header-content">
+        <ion-icon name="build"></ion-icon>
+        <span>Materiais</span>
+      </div>
+    </ion-title>
+    <ion-button
+      fill="clear"
+      slot="end"
+      [routerLink]="['/dashboard']">
+      <ion-icon name="home"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="equipamentos-content">
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando equipamentos...</p>
+  </div>
+
+  <div class="equipamentos-container">
+    <!-- Search section -->
+    <div class="search-section">
+      <div class="search-container">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar equipamentos..."
+          debounce="300"
+          (ionInput)="filterEquipamentos()">
+        </ion-searchbar>
+      </div>
+    </div>
+
+    <!-- Equipamentos list -->
+    <div *ngIf="filteredEquipamentos.length > 0">
+      <ion-card class="equipamento-card" *ngFor="let equipamento of filteredEquipamentos">
+        <div class="equipamento-header">
+          <div class="equipamento-avatar">
+            {{ getNome(equipamento).substring(0, 1).toUpperCase() }}
+          </div>
+          
+          <div class="equipamento-info">
+            <h3>{{ getNome(equipamento) }}</h3>
+            <div class="equipamento-codigo">
+              <ion-icon name="construct"></ion-icon>
+              <span>{{ getCodigo(equipamento) }}</span>
+            </div>
+          </div>
+          
+          <ion-button
+            fill="clear"
+            class="menu-button"
+            id="equipamento-{{ equipamento.id }}-menu">
+                            <ion-icon name="ellipsis-vertical"></ion-icon>
+          </ion-button>
+          
+          <!-- Menu contextual -->
+          <ion-popover trigger="equipamento-{{ equipamento.id }}-menu" triggerAction="click">
+            <ng-template>
+              <ion-content>
+                <ion-list>
+                  <ion-item button (click)="editEquipamento(equipamento)">
+                    <ion-icon name="create" slot="start"></ion-icon>
+                    <ion-label>Editar</ion-label>
+                  </ion-item>
+                  <ion-item button (click)="deleteEquipamento(equipamento.id)">
+                    <ion-icon name="trash" slot="start" color="danger"></ion-icon>
+                    <ion-label color="danger">Excluir</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </div>
+        
+        <div class="equipamento-details">
+          <div class="detail-row">
+            <ion-icon name="document"></ion-icon>
+            <span>{{ getDescricao(equipamento) }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <ion-icon name="folder"></ion-icon>
+            <span>{{ getCategoria(equipamento) }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <ion-icon name="cash"></ion-icon>
+            <span>R$ {{ getValor(equipamento) | currency:'BRL':'symbol':'1.2-2' }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <ion-icon name="information-circle"></ion-icon>
+            <span 
+              class="status-badge"
+              [ngClass]="getStatusClass(equipamento)">
+              <ion-icon [name]="getStatusIcon(equipamento)"></ion-icon>
+              {{ getStatusText(equipamento) }}
+            </span>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="filteredEquipamentos.length === 0 && !isLoading">
+      <ion-icon name="build" class="empty-icon"></ion-icon>
+      <h3>Nenhum equipamento encontrado</h3>
+      <p *ngIf="searchTerm">Tente alterar os termos da busca</p>
+      <p *ngIf="!searchTerm">Você ainda não possui equipamentos cadastrados</p>
+      <ion-button 
+        class="add-button"
+        fill="outline" 
+        (click)="addEquipamento()"
+        *ngIf="!searchTerm">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Adicionar Equipamento
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="add-fab" (click)="addEquipamento()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content> 

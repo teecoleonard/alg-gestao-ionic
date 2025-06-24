@@ -1,0 +1,116 @@
+<ion-content class="login-content">
+  <div class="login-container">
+    
+    <!-- Logo e Título -->
+    <div class="header-section">
+      <div class="logo-container">
+        <ion-icon name="construct" class="logo-icon"></ion-icon>
+        <h1>ALG Gestão</h1>
+      </div>
+      <p class="app-subtitle">Sistema de Locação de Equipamentos</p>
+    </div>
+
+    <!-- Card de Login -->
+    <ion-card class="login-card">
+      <ion-card-header>
+        <div class="card-title">
+          <ion-icon name="log-in"></ion-icon>
+          <span>Entrar</span>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          
+          <!-- Campo CPF -->
+          <ion-item class="input-item" [class.error]="hasError('cpf', 'required') || hasError('cpf', 'cpfInvalido')">
+            <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">CPF</ion-label>
+            <ion-input 
+              type="text" 
+              formControlName="cpf"
+              placeholder="000.000.000-00 ou admin"
+              autocomplete="username"
+              (ionInput)="onCpfInput($event)"
+              [clearInput]="true">
+            </ion-input>
+          </ion-item>
+          
+          <!-- Erro CPF -->
+          <ion-text color="danger" class="error-text" *ngIf="hasError('cpf', 'required') || hasError('cpf', 'cpfInvalido')">
+            {{ getErrorMessage('cpf') }}
+          </ion-text>
+
+          <!-- Campo Senha -->
+          <ion-item class="input-item" [class.error]="hasError('senha', 'required') || hasError('senha', 'minlength')">
+            <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">Senha</ion-label>
+            <ion-input 
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="senha"
+              placeholder="••••••••"
+              autocomplete="current-password">
+            </ion-input>
+            <ion-button 
+              fill="clear" 
+              slot="end" 
+              (click)="togglePasswordVisibility()"
+              class="password-toggle">
+              <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+            </ion-button>
+          </ion-item>
+          
+          <!-- Erro Senha -->
+          <ion-text color="danger" class="error-text" *ngIf="hasError('senha', 'required') || hasError('senha', 'minlength')">
+            {{ getErrorMessage('senha') }}
+          </ion-text>
+
+          <!-- Link Esqueceu Senha -->
+          <div class="forgot-password">
+            <ion-button fill="clear" size="small" (click)="forgotPassword()">
+              Esqueceu a senha?
+            </ion-button>
+          </div>
+
+          <!-- Botão Login -->
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="!loginForm.valid || isLoading"
+            class="login-button">
+            <ion-icon name="log-in" slot="start"></ion-icon>
+            {{ isLoading ? 'Entrando...' : 'Entrar' }}
+          </ion-button>
+
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Link para Registro -->
+    <div class="register-section">
+      <p>Não tem uma conta?</p>
+      <ion-button fill="outline" (click)="goToRegister()">
+        Criar Conta
+      </ion-button>
+    </div>
+
+    <!-- Info de Desenvolvimento -->
+    <div class="dev-info">
+      <ion-text color="medium">
+        <small>
+          <strong>Para desenvolvimento:</strong><br>
+          CPF: 000.000.000-00<br>
+          Senha: admin123
+        </small>
+      </ion-text>
+    </div>
+
+    <!-- Versão -->
+    <div class="version-info">
+      <ion-text color="medium">
+        <small>Versão 1.0.0</small>
+      </ion-text>
+    </div>
+
+  </div>
+</ion-content> 

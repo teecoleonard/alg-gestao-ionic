@@ -1,0 +1,87 @@
+// Importando a fonte Inter do Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+ion-tab-bar {
+  --background: linear-gradient(135deg, #1a4d3a 0%, #0f2419 100%);
+  --border: 1px solid rgba(26, 77, 58, 0.2);
+  --color: rgba(232, 245, 232, 0.6);
+  padding: 8px 0;
+  
+  ion-tab-button {
+    --color: rgba(232, 245, 232, 0.6);
+    --color-selected: #5cb368;
+    --background-focused: rgba(92, 179, 104, 0.1);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    
+    &.tab-selected {
+      --color: #5cb368;
+      --background: rgba(92, 179, 104, 0.15);
+      transform: scale(1.05);
+      
+      ion-icon {
+        color: #5cb368;
+        filter: drop-shadow(0 2px 4px rgba(92, 179, 104, 0.3));
+      }
+      
+      ion-label {
+        color: #5cb368;
+        font-weight: 600;
+      }
+    }
+    
+    &:hover:not(.tab-selected) {
+      --color: rgba(232, 245, 232, 0.8);
+      --background: rgba(255, 255, 255, 0.05);
+    }
+    
+    ion-icon {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+      transition: all 0.3s ease;
+    }
+    
+    ion-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+  }
+}
+
+// ========================================
+// RESPONSIVIDADE
+// ========================================
+@media (max-width: 768px) {
+  ion-tab-bar {
+    padding: 6px 0;
+    
+    ion-tab-button {
+      ion-icon {
+        font-size: 1.2rem;
+      }
+      
+      ion-label {
+        font-size: 0.7rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  ion-tab-bar {
+    padding: 4px 0;
+    
+    ion-tab-button {
+      ion-icon {
+        font-size: 1.1rem;
+        margin-bottom: 1px;
+      }
+      
+      ion-label {
+        font-size: 0.65rem;
+        margin-top: 1px;
+      }
+    }
+  }
+}

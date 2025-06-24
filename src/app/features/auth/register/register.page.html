@@ -1,0 +1,146 @@
+<ion-content class="register-content">
+  <div class="register-container">
+    
+    <!-- Header -->
+    <div class="header-section">
+      <div class="logo-container">
+        <ion-icon name="construct-outline" class="logo-icon"></ion-icon>
+      </div>
+      <h1 class="app-title">ALG Gestão</h1>
+      <p class="app-subtitle">Criar Nova Conta</p>
+    </div>
+
+    <!-- Card de Registro -->
+    <ion-card class="register-card">
+      <ion-card-header>
+        <ion-card-title class="card-title">
+          <ion-icon name="person-add-outline"></ion-icon>
+          Dados da Conta
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          
+          <!-- Campo Nome -->
+          <ion-item class="input-item" [class.error]="hasError('nome', 'required') || hasError('nome', 'minlength')">
+            <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">Nome Completo</ion-label>
+            <ion-input 
+              type="text" 
+              formControlName="nome"
+              placeholder="Seu nome completo"
+              autocomplete="name"
+              [clearInput]="true">
+            </ion-input>
+          </ion-item>
+          
+          <!-- Erro Nome -->
+          <ion-text color="danger" class="error-text" *ngIf="hasError('nome', 'required') || hasError('nome', 'minlength')">
+            {{ getErrorMessage('nome') }}
+          </ion-text>
+
+          <!-- Campo CPF -->
+          <ion-item class="input-item" [class.error]="hasError('cpf', 'required') || hasError('cpf', 'cpfInvalido')">
+            <ion-icon name="id-card-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">CPF</ion-label>
+            <ion-input 
+              type="text" 
+              formControlName="cpf"
+              placeholder="000.000.000-00"
+              autocomplete="username"
+              (ionInput)="onCpfInput($event)"
+              [clearInput]="true">
+            </ion-input>
+          </ion-item>
+          
+          <!-- Erro CPF -->
+          <ion-text color="danger" class="error-text" *ngIf="hasError('cpf', 'required') || hasError('cpf', 'cpfInvalido')">
+            {{ getErrorMessage('cpf') }}
+          </ion-text>
+
+          <!-- Campo Tipo de Usuário -->
+          <ion-item class="input-item">
+            <ion-icon name="business-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">Tipo de Usuário</ion-label>
+            <ion-select formControlName="role" placeholder="Selecione o tipo">
+              <ion-select-option value="cliente">Cliente</ion-select-option>
+              <ion-select-option value="funcionario">Funcionário</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Campo Senha -->
+          <ion-item class="input-item" [class.error]="hasError('senha', 'required') || hasError('senha', 'minlength')">
+            <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">Senha</ion-label>
+            <ion-input 
+              type="password"
+              formControlName="senha"
+              placeholder="••••••••"
+              autocomplete="new-password">
+            </ion-input>
+          </ion-item>
+          
+          <!-- Erro Senha -->
+          <ion-text color="danger" class="error-text" *ngIf="hasError('senha', 'required') || hasError('senha', 'minlength')">
+            {{ getErrorMessage('senha') }}
+          </ion-text>
+
+          <!-- Campo Confirmar Senha -->
+          <ion-item class="input-item" [class.error]="hasError('confirmaSenha', 'required') || hasPasswordMismatch()">
+                          <ion-icon name="checkmark-circle" slot="start" class="input-icon"></ion-icon>
+            <ion-label position="stacked">Confirmar Senha</ion-label>
+            <ion-input 
+              type="password"
+              formControlName="confirmaSenha"
+              placeholder="••••••••"
+              autocomplete="new-password">
+            </ion-input>
+          </ion-item>
+          
+          <!-- Erro Confirmar Senha -->
+          <ion-text color="danger" class="error-text" *ngIf="hasError('confirmaSenha', 'required')">
+            {{ getErrorMessage('confirmaSenha') }}
+          </ion-text>
+          
+          <!-- Erro Senhas Não Coincidem -->
+          <ion-text color="danger" class="error-text" *ngIf="hasPasswordMismatch()">
+            As senhas não coincidem
+          </ion-text>
+
+          <!-- Botão Registrar -->
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            class="register-button"
+            [disabled]="isLoading">
+            <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+            <span *ngIf="!isLoading">
+              <ion-icon name="person-add-outline"></ion-icon>
+              Criar Conta
+            </span>
+          </ion-button>
+
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Link para Login -->
+    <div class="login-section">
+      <p>Já tem uma conta?</p>
+      <ion-button fill="outline" (click)="goToLogin()">
+        Fazer Login
+      </ion-button>
+    </div>
+
+    <!-- Aviso -->
+    <div class="info-section">
+      <ion-text color="medium">
+        <small>
+          <strong>Nota:</strong> As contas criadas precisam ser aprovadas pelo administrador do sistema.
+        </small>
+      </ion-text>
+    </div>
+
+  </div>
+</ion-content> 
